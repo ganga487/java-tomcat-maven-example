@@ -34,7 +34,7 @@ spec:
     }
 
     environment{
-        NOTIFYUSERS = 'lokesh.kamalay@aa.com'
+        NOTIFYUSERS = 'lokeshkamalay@gmail.com'
         REGISTRY = 'lokeshkamalay/sq'
         DOCKERLOGIN = credentials('lokidockerid')
         // DOCKERAUTH = credentials('lokiucpauthid')
