@@ -67,6 +67,7 @@ spec:
             steps{
                 container('dockerclient'){
                     sh '''
+                        #Following in case you are using Docker Enterprise or private Kubernetes cluster
                         #curl -k -H "Authorization: Bearer ${DOCKERAUTH}" https://kubernetes/api/clientbundle -o bundle.zip
                         #unzip bundle.zip
                         #export DOCKER_TLS_VERIFY=1
