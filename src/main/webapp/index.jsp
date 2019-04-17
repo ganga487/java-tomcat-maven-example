@@ -1,6 +1,6 @@
 <html>
 <body>
-<h2>Hello Mythrians!</h2>
-<img src="https://kubernetes.io/images/kubernetes-horizontal-color.png">
+<h2>Hello Guys!</h2>
+<img src="https://cdn-images-1.medium.com/max/2600/1*JAJ910fg52ODIRZjHXASBQ.png">
 </body>
 </html>
