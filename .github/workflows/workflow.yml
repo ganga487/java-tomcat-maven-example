@@ -38,13 +38,22 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"GitHub-Actions\", \"text\": \"The status of the job ${{ github.job }} is ${{ job.status }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
-      - name: Printing Contexts
-        env:
-          JOBS_VARS: ${{ toJson(job) }}
-          GITHUB_VARS: ${{ toJson(github) }}
-        run: |
-          echo "$JOBS_VARS"
-          echo "$GITHUB_VARS"
+      # - name: Printing Contexts
+      #   env:
+      #     JOBS_VARS: ${{ toJson(job) }}
+      #     GITHUB_VARS: ${{ toJson(github) }}
+      #   run: |
+      #     echo "$JOBS_VARS"
+      #     echo "$GITHUB_VARS"
+      - name: Building Dockerimage
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          #registry: packages.aa.com
+          repository: lokeshkamalay/tomcat
+          tag: ${{ github.run_id }}-${{ github.run_number }}
+        
      
   CD:
     needs: CI
@@ -55,7 +64,7 @@ jobs:
         with:
           name: mvn-artifact
       - name: Deploy to Dev
-        if: github.ref != 'refs/heads/master' || github.ref != 'refs/heads/develop'
+        if: github.ref == 'refs/heads/feature*' || github.ref != 'refs/heads/bug*'
         run: |
           echo "I'm doing a CF Push to Dev Here"
       - name: Deploy to Stage
