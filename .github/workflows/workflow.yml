@@ -42,7 +42,6 @@ jobs:
         env:
           JOBS_VARS: ${{ toJson(job) }}
           GITHUB_VARS: ${{ toJson(github) }}
-      - name: Printing Variables
         run: |
           echo "$JOBS_VARS"
           echo "$GITHUB_VARS"
