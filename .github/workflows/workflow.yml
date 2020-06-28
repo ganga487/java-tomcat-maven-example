@@ -37,4 +37,24 @@ jobs:
           path: target/java-tomcat-maven-example.war
       - name: Notify Slack
         run: |
-          curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"webhookbot\", \"text\": \"The status of the job ${{ github.event_name }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
+          curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"GitHub-Actions\", \"text\": \"The status of the job ${{ github.job }} is ${{ job.status }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
+
+  CD:
+    needs: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Dev
+        run: |
+          echo "I'm doing a CF Push to Dev Here"
+      - name: Deploy to Stage
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          echo "I'm doing a CF Push to Stage Here"
+      - name: Deploy to Prod
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "I'm doing a CF Push to Prod Here"
+      - name: Notify Slack
+        if: always()
+        run: |
+          curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"GitHub-Actions\", \"text\": \"The status of the job ${{ github.job }} is ${{ job.status }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
