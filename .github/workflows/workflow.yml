@@ -55,7 +55,7 @@ jobs:
         with:
           name: mvn-artifact
       - name: Deploy to Dev
-        if: github.ref != 'refs/heads/master' or github.ref != 'refs/heads/develop'
+        if: github.ref != 'refs/heads/master' || github.ref != 'refs/heads/develop'
         run: |
           echo "I'm doing a CF Push to Dev Here"
       - name: Deploy to Stage
