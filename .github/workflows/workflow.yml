@@ -38,12 +38,25 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"GitHub-Actions\", \"text\": \"The status of the job ${{ github.job }} is ${{ job.status }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
-
+      - name: Printing Contexts
+        env:
+          JOBS_VARS: ${{ toJson(job) }}
+          GITHUB_VARS: ${{ toJson(github) }}
+      - name: Printing Variables
+        run: |
+          echo "$JOBS_VARS"
+          echo "$GITHUB_VARS"
+     
   CD:
     needs: CI
     runs-on: ubuntu-latest
     steps:
+      - name: Download the Artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: mvn-artifact
       - name: Deploy to Dev
+        if: github.ref != 'refs/heads/master' or github.ref != 'refs/heads/develop'
         run: |
           echo "I'm doing a CF Push to Dev Here"
       - name: Deploy to Stage
