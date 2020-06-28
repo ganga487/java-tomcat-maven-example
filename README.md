@@ -1,3 +1,5 @@
+![](https://github.com/lokeshkamalay/java-tomcat-maven-example/workflows/.github/workflows/workflow.yml/badge.svg)
+
 # java-tomcat-maven-example
 
 This is an example ready-to-deploy java web application built for Tomcat using Maven and webapp-runner.
