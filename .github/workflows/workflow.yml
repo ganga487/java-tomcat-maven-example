@@ -37,4 +37,4 @@ jobs:
           path: target/java-tomcat-maven-example.war
       - name: Notify Slack
         run: |
-          curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"webhookbot\", \"text\": \"The status of the job ${{ github.reposity }}.\", \"icon_emoji\": \":ghost:\"}" ${{ secrets.SLACK_WEBHOOK }}
+          curl -X POST --data-urlencode "payload={\"channel\": \"#cje-testing\", \"username\": \"webhookbot\", \"text\": \"The status of the job ${{ github.event_name }}.\", \"icon_emoji\": \":github:\"}" ${{ secrets.SLACK_WEBHOOK }}
